@@ -1,0 +1,9 @@
+services:
+  cloudflared:
+    container_name: cloudflared
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    env_file: $DOCKERDIR/.env
+    command: tunnel --no-autoupdate run a1c01f2d-873b-4ed8-8217-dce803b50d23
+    networks:
+      - traefik_proxy

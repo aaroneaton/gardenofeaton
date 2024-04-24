@@ -19,7 +19,7 @@ services:
         ipv4_address: 192.168.90.100
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.pihole.rule=Host(`pihole.eaton.home`)"
+      - "traefik.http.routers.pihole.rule=Host($TRAEFIK_HOSTS)"
       - "traefik.http.services.pihole.loadbalancer.server.port=80"
       - "traefik.http.routers.pihole.entrypoints=web"
       - "traefik.docker.network=docker_traefik_proxy"
