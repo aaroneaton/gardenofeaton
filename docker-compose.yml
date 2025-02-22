@@ -15,8 +15,8 @@ networks:
         - subnet: 192.168.90.0/24
 
 include:
-  - compose/cloudflared.yml
   - compose/socket-proxy.yml
-  - compose/portainer.yml
   - compose/traefik.yml
-  - compose/pihole.yml
+  # - compose/cloudflared.yml
+  # - compose/portainer.yml
+  # - compose/pihole.yml
