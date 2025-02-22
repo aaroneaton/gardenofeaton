@@ -1,0 +1,1 @@
+https://www.simplehomelab.com/traefik-v3-docker-compose-guide-2024/

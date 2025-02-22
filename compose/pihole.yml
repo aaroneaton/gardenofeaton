@@ -1,7 +1,6 @@
 services:
   pihole:
     container_name: pihole
-    domainname: eaton.home
     image: "pihole/pihole:latest"
     ports:
       - "53:53/tcp"
@@ -14,12 +13,20 @@ services:
       - $DOCKERDIR/services/pihole/dnsmasq.d/:/etc/dnsmasq.d/
     env_file: $DOCKERDIR/.env
     restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
     networks:
       traefik_proxy:
         ipv4_address: 192.168.90.100
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.pihole.rule=Host($TRAEFIK_HOSTS)"
-      - "traefik.http.services.pihole.loadbalancer.server.port=80"
-      - "traefik.http.routers.pihole.entrypoints=web"
-      - "traefik.docker.network=docker_traefik_proxy"
+      # - "traefik.docker.network=docker_traefik_proxy"
+      # HTTP Routers
+      - "traefik.http.routers.pihole-rtr.rule=Host(`pihole.$DOMAINNAME_1`)"
+      - "traefik.http.routers.pihole-rtr.entrypoints=websecure"
+      # HTTP Services
+      - "traefik.http.routers.pihole-rtr.service=pihole-svc"
+      - "traefik.http.services.pihole-svc.loadbalancer.server.port=80"
+      # Middlewares
+      - "traefik.http.routers.pihole-rtr.middlewares=middlewares-secure-headers@file"
+      - "traefik.http.routers.pihole-rtr.middlewares=middlewares-rate-limit@file"

@@ -18,5 +18,5 @@ include:
   - compose/socket-proxy.yml
   - compose/traefik.yml
   # - compose/cloudflared.yml
-  # - compose/portainer.yml
-  # - compose/pihole.yml
+  - compose/portainer.yml
+  - compose/pihole.yml
